@@ -18,9 +18,13 @@ import requests
 # Remplacez "VOTRE_CLE_API_GEMINI" par votre vraie clé (laissez les guillemets)
 
 def obtenir_suggestions_ia(materiau, dimensions):
+if "GEMINI_API_KEY" in st.secrets:
     # Remplacez par votre vraie clé API
     API_KEY = st.secrets["GEMINI_API_KEY"]
-
+    genai.configure(api_key=api_key)
+else:
+    st.error("Erreur:la cle GEMINI_API_KEY est introuvable.")
+    st.stop() 
     
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
     
