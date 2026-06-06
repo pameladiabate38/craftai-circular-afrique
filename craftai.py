@@ -20,7 +20,7 @@ import requests
 def obtenir_suggestions_ia(materiau, dimensions):
   if "GEMINI_API_KEY" in st.secrets:
     # Remplacez par votre vraie clé API
-    API_KEY = st.secrets["GEMINI_API_KEY"]
+    API_KEY =st.secrets["GEMINI_API_KEY"]
     genai.configure(api_key=api_key)
   else:
     st.error("Erreur:la cle GEMINI_API_KEY est introuvable.")
