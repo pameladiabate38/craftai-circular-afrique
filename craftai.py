@@ -17,7 +17,7 @@ from PIL import Image
 import requests
 # Configuration de la clé API
 # Remplacez "VOTRE_CLE_API_GEMINI" par votre vraie clé (laissez les guillemets)
-
+@st.cache_data
 def obtenir_suggestions_ia(materiau, dimensions):
   if "GEMINI_API_KEY" in st.secrets:
     # Remplacez par votre vraie clé API
