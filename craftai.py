@@ -18,26 +18,19 @@ import requests
 def appliquer_style():
     st.markdown("""
     <style>
-    /* Couleur du fond de l'application */
-    .stApp {
-        background-color: #FDFBF7; !important;
+    /* Cible le fond principal */
+    [data-testid="stAppViewContainer"] {
+        background-color: #FDFBF7 !important;
     }
     
-    /* Couleur des titres */
+    /* Cible la barre latérale si tu en as une */
+    [data-testid="stSidebar"] {
+        background-color: #FDFBF7 !important;
+    }
+    
+    /* Cible le texte */
     h1, h2, h3, p, div {
-        color: #1B5E20 !imporant;
-    }
-    
-    /* Couleur du texte normal */
-    p {
         color: #6D4C41 !important;
-    }
-    
-    /* Couleur des boutons */
-    div.stButton > button {
-        background-color: #E65100 !important;
-        color: white !important;
-        border: none;
     }
     </style>
 """, unsafe_allow_html=True)
