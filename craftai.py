@@ -18,17 +18,9 @@ import requests
 def appliquer_style():
     st.markdown("""
     <style>
-    /* Cible le fond principal */
     [data-testid="stAppViewContainer"] {
         background-color: #FDFBF7 !important;
     }
-    
-    /* Cible la barre latérale si tu en as une */
-    [data-testid="stSidebar"] {
-        background-color: #FDFBF7 !important;
-    }
-    
-    /* Cible le texte */
     h1, h2, h3, p, div {
         color: #6D4C41 !important;
     }
