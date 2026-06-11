@@ -20,23 +20,24 @@ def appliquer_style():
     <style>
     /* Couleur du fond de l'application */
     .stApp {
-        background-color: #FDFBF7;
+        background-color: #FDFBF7; !important;
     }
     
     /* Couleur des titres */
-    h1, h2, h3 {
-        color: #1B5E20;
+    h1, h2, h3, p, div {
+        color: #1B5E20 !imporant;
     }
     
     /* Couleur du texte normal */
     p {
-        color: #6D4C41;
+        color: #6D4C41 !important;
     }
     
     /* Couleur des boutons */
     div.stButton > button {
-        background-color: #E65100;
-        color: #FFFFFF;
+        background-color: #E65100 !important;
+        color: white !important;
+        border: none;
     }
     </style>
 """, unsafe_allow_html=True)
