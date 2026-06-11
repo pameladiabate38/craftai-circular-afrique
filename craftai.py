@@ -15,6 +15,31 @@ import numpy as np
 
 from PIL import Image
 import requests
+def appliquer_style():
+st.markdown("""
+    <style>
+    /* Couleur du fond de l'application */
+    .stApp {
+        background-color: #FDFBF7;
+    }
+    
+    /* Couleur des titres */
+    h1, h2, h3 {
+        color: #1B5E20;
+    }
+    
+    /* Couleur du texte normal */
+    p {
+        color: #6D4C41;
+    }
+    
+    /* Couleur des boutons */
+    div.stButton > button {
+        background-color: #E65100;
+        color: #FFFFFF;
+    }
+    </style>
+""", unsafe_allow_html=True)
 # Configuration de la clé API
 # Remplacez "VOTRE_CLE_API_GEMINI" par votre vraie clé (laissez les guillemets)
 @st.cache_data
