@@ -16,7 +16,7 @@ import numpy as np
 from PIL import Image
 import requests
 def appliquer_style():
-st.markdown("""
+    st.markdown("""
     <style>
     /* Couleur du fond de l'application */
     .stApp {
