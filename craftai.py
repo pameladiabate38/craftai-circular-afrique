@@ -627,12 +627,12 @@ with tab_scan:
             st.succes("voici les suggestions de L'IA:")
             st.write(st.session_state.analysis)
             
-            else:
-                st.session_state.analysis = None
-                st.session_state.length_cm = 18.0
-                st.session_state.width_cm = 12.0
-                st.session_state.pieces = 1
-            st.session_state.material = material
+        else:
+             st.session_state.analysis = None
+             st.session_state.length_cm = 18.0
+             st.session_state.width_cm = 12.0
+             st.session_state.pieces = 1
+             st.session_state.material = material
             size = classify_size(st.session_state.length_cm, st.session_state.width_cm)
             ideas = get_ideas(material, size)
             price_ranges = [
