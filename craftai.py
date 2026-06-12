@@ -619,7 +619,7 @@ with tab_scan:
         st.info(
             "Placez la piece choisie a plat a cote du tissu. L'IA utilise son diametre connu pour convertir les pixels en centimetres."
         )
- if st.button("Analyser et proposer", type="primary", use_container_width=True):
+if st.button("Analyser et proposer", type="primary", use_container_width=True):
             if uploaded is not None:
                 image = Image.open(uploaded)
                 analysis = analyze_image(image, reference_label, REFERENCE_OBJECTS[reference_label])
