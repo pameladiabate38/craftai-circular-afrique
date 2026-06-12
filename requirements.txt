@@ -1,6 +1,7 @@
 streamlit
 opencv-python-headless
 Pillow
-google-generativeai
+#google-generativeai
+groq
 requests
 numpy
