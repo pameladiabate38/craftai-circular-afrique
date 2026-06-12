@@ -633,7 +633,7 @@ with tab_scan:
              st.session_state.width_cm = 12.0
              st.session_state.pieces = 1
              st.session_state.material = material
-            size = classify_size(st.session_state.length_cm, st.session_state.width_cm)
+       size = classify_size(st.session_state.length_cm, st.session_state.width_cm)
             ideas = get_ideas(material, size)
             price_ranges = [
                 estimate_burkina_price(material, st.session_state.length_cm, st.session_state.width_cm, idea[1])
