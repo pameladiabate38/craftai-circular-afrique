@@ -621,13 +621,12 @@ with tab_scan:
         )
 
         if st.button("Analyser et proposer", type="primary", use_container_width=True):
-            if uploaded is not None:
-                image = Image.open(uploaded)
-                analysis = analyze_image(image, reference_label, REFERENCE_OBJECTS[reference_label])
-                st.session_state.analysis = analysis
-                st.session_state.length_cm = analysis.estimated_length_cm
-                st.session_state.width_cm = analysis.estimated_width_cm
-                st.session_state.pieces = analysis.estimated_pieces
+            with st.spinner("L'IA reflechit...."):
+                reponse_ia= get_eco_suggestions_ia(materiau,dimension)
+                st.session_state.analysis=reponse_ia
+            st.succes("voici les suggestions de L'IA:")
+            st.write(st.session_state.analysis)
+            
             else:
                 st.session_state.analysis = None
                 st.session_state.length_cm = 18.0
