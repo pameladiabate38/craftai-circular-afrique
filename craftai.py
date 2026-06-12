@@ -6,7 +6,7 @@ import os
 from groq import Groq
 #import google.generativeai as genai
 #genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-client= Grop(api_key=st.secrets["GROQ_API_KEY"])
+client= Groq(api_key=st.secrets["GROQ_API_KEY"])
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
