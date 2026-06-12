@@ -619,38 +619,53 @@ with tab_scan:
         st.info(
             "Placez la piece choisie a plat a cote du tissu. L'IA utilise son diametre connu pour convertir les pixels en centimetres."
         )
+if st.button("Analyser et proposer", type="primary", use_container_width=True):
+    with st.spinner("L'IA reflechit...."):
+        reponse_ia = get_eco_suggestions_ia(materiau, dimension)
+        st.session_state.analysis = reponse_ia
 
-        if st.button("Analyser et proposer", type="primary", use_container_width=True):
-            with st.spinner("L'IA reflechit...."):
-                reponse_ia= get_eco_suggestions_ia(materiau,dimension)
-                st.session_state.analysis=reponse_ia
-            st.succes("voici les suggestions de L'IA:")
-            st.write(st.session_state.analysis)
-            
-        else:
-             st.session_state.analysis = None
-             st.session_state.length_cm = 18.0
-             st.session_state.width_cm = 12.0
-             st.session_state.pieces = 1
-             st.session_state.material = material
-       size = classify_size(st.session_state.length_cm, st.session_state.width_cm)
-            ideas = get_ideas(material, size)
-            price_ranges = [
-                estimate_burkina_price(material, st.session_state.length_cm, st.session_state.width_cm, idea[1])
-                for idea in ideas
-            ]
-            save_analysis(
-                st.session_state.get("artisan_name", "artisane"),
-                material,
-                st.session_state.length_cm,
-                st.session_state.width_cm,
-                st.session_state.pieces,
-                size,
-                ideas,
-                (min(price[0] for price in price_ranges), max(price[1] for price in price_ranges)),
-            )
-            st.success("Analyse terminee. Ouvrez l'onglet Idees & tutoriels.")
+    st.success("Voici les suggestions de l'IA :")
+    st.write(st.session_state.analysis)
 
+else:
+    st.session_state.analysis = None
+    st.session_state.length_cm = 18.0
+    st.session_state.width_cm = 12.0
+    st.session_state.pieces = 1
+    st.session_state.material = material
+
+    size = classify_size(
+        st.session_state.length_cm,
+        st.session_state.width_cm
+    )
+
+    ideas = get_ideas(material, size)
+
+    price_ranges = [
+        estimate_burkina_price(
+            material,
+            st.session_state.length_cm,
+            st.session_state.width_cm,
+            idea[1]
+        )
+        for idea in ideas
+    ]
+
+    save_analysis(
+        st.session_state.get("artisan_name", "artisane"),
+        material,
+        st.session_state.length_cm,
+        st.session_state.width_cm,
+        st.session_state.pieces,
+        size,
+        ideas,
+        (
+            min(price[0] for price in price_ranges),
+            max(price[1] for price in price_ranges),
+        ),
+    )
+
+    st.success("Analyse terminee. Ouvrez l'onglet Idees & tutoriels.")
     with preview:
         if uploaded is not None:
             image = Image.open(uploaded)
