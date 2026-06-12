@@ -1,10 +1,13 @@
+st.cache_data.clear()
 from __future__ import annotations
 import streamlit as st
 import math
 import sqlite3
 import os
-import google.generativeai as genai
-genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+from groq import Groq
+#import google.generativeai as genai
+#genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
+client= Grop(api_key=st.secrets["GROQ_API_KEY"])
 from dataclasses import dataclass
 from datetime import datetime
 from pathlib import Path
@@ -30,15 +33,15 @@ def appliquer_style():
 # Remplacez "VOTRE_CLE_API_GEMINI" par votre vraie clé (laissez les guillemets)
 @st.cache_data
 def obtenir_suggestions_ia(materiau, dimensions):
-  if "GEMINI_API_KEY" in st.secrets:
+  if "GROQ_API_KEY" in st.secrets:
     # Remplacez par votre vraie clé API
-    API_KEY =st.secrets["GEMINI_API_KEY"]
-    genai.configure(api_key=api_key)
+    API_KEY =st.secrets["GROQ_API_KEY"]
+   # genai.configure(api_key=api_key)
   else:
-    st.error("Erreur:la cle GEMINI_API_KEY est introuvable.")
+    st.error("Erreur:la cle GROQ_API_KEY est introuvable.")
     st.stop() 
     
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
+   # url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={API_KEY}"
     
     # Construction du prompt pour l'IA
     prompt = f"Tu es une experte en artisanat au Burkina Faso. Pour {materiau} ayant comme référence {dimensions}, propose 3 idées créatives."
@@ -459,15 +462,20 @@ def obtenir_suggestions_ia(materiau: str, dimensions: str) -> str:
         # Assurez-vous que genai est bien configuré en haut du fichier
         # Et utilisez cette syntaxe précise :
 
-        model = genai.GenerativeModel(model_name="gemini-flash-latest")
+       # model = genai.GenerativeModel(model_name="gemini-flash-latest")
         
         prompt = f"""
         Tu es une experte en artisanat au Burkina Faso. 
         Pour une chute de {materiau} de {dimensions}, propose 3 idées originales de création.
         Pour chaque idée, donne : le nom, le niveau de difficulté, et une estimation du prix en FCFA.
         """
-        response = model.generate_content(prompt)
-        return response.text
+        #response = model.generate_content(prompt)
+        #return response.text
+        completion= client.chat.completions.create(
+            model="llama-3.3-70b-versatile",
+            messages=[{"role": "user", "content":prompt}]
+        )
+        return completion.choices[0].message.content
     except Exception as e:
         if "429" in str(e):
             return"cratfai:je suis un peu fatiguée aujourdhui (quota dépassé).Revenez me voir dans quelques instants"
