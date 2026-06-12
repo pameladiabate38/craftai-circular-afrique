@@ -621,7 +621,7 @@ with tab_scan:
         )
 if st.button("Analyser et proposer", type="primary", use_container_width=True):
     with st.spinner("L'IA reflechit...."):
-        reponse_ia = obtenir_suggestions_ia(Materiau, Dimensions)
+        reponse_ia = obtenir_suggestions_ia(materiau, dimensions)
         st.session_state.analysis = reponse_ia
 
     st.success("Voici les suggestions de l'IA :")
