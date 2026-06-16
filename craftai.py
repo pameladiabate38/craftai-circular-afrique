@@ -55,7 +55,7 @@ def appliquer_style(chemin_image):
         st.error(f"⚠️ Fichier image '{chemin_image}' introuvable.")
 
 # On applique le fond
-appliquer_style("fond_moderne.jpeg")
+appliquer_style("image.jpeg")
 
 # ==========================================
 # LE RESTE DE TON CODE (BOUTONS, TITRES...)
