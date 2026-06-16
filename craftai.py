@@ -59,7 +59,7 @@ def appliquer_style(chemin_image):
 
 # 2. TU APPELLES LA FONCTION JUSTE ICI
 # (Assure-toi que ton image s'appelle bien 'image.png' et est dans le même dossier)
-appliquer_style("image.png")
+appliquer_style("image.jpeg")
 
 
 # ==========================================
