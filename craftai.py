@@ -46,24 +46,24 @@ def appliquer_style(chemin_image):
             /* CONFIGURATION POUR LE CONTENU SUR TÉLÉPHONE */
 @media (max-width: 768px) {
     /* On réduit un peu la taille des gros titres pour qu'ils ne prennent pas tout l'écran */
-    h1 {
+    h1 {{
         font-size: 24px !important;
-    }
-    h2 {
+    }}
+    h2 {{
         font-size: 20px !important;
-    }
+    }}
     
     /* On ajoute de l'espace entre les blocs empilés pour que ce soit aéré */
     div[data-testid="stVerticalBlock"] > div {
         margin-bottom: 20px !important;
         padding: 12px !important; /* Des cartes un peu plus petites pour gagner de la place */
-    }
+    }}
     
     /* On force le bouton d'analyse à prendre toute la largeur du téléphone pour qu'il soit facile à cliquer avec le pouce */
     .stButton button {
         width: 100% !important;
-    }
-}
+    }}
+}}
 
             /* 2. Les blocs du site en général */
             .stMarkdown, .stButton, div[data-testid="stVerticalBlock"] > div, .stFileUploader {{
