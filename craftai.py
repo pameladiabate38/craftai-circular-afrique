@@ -30,29 +30,57 @@ def appliquer_style(chemin_image):
         st.markdown(
             f"""
             <style>
-            /* CONFIGURATION PAR DÉFAUT (POUR ORDINATEUR) */
+            /* 1. Ton fond d'écran */
             html, body, [data-testid="stAppViewContainer"], [data-testid="stMainViewContainer"], .stApp {{
                 background-image: url("data:image/jpeg;base64,{bin_str}") !important;
-                background-size: 400px !important; /* Taille normale sur grand écran */
+                background-size: 400px !important;
                 background-repeat: repeat !important;
                 background-attachment: fixed !important;
             }}
 
-            /* CONFIGURATION SPÉCIALE POUR LES TÉLÉPHONES (Écrans de moins de 768px) */
             @media (max-width: 768px) {{
                 html, body, [data-testid="stAppViewContainer"], [data-testid="stMainViewContainer"], .stApp {{
-                    /* On double presque la taille du motif sur téléphone pour qu'il soit grand et aéré ! */
                     background-size: 700px !important; 
                 }}
             }}
 
-            /* Les cartes blanches transparentes pour pouvoir lire ton texte (noir, vert, orange, rouge) */
+            /* 2. Les blocs du site en général */
             .stMarkdown, .stButton, div[data-testid="stVerticalBlock"] > div, .stFileUploader {{
                 background-color: rgba(255, 255, 255, 0.94) !important;
                 padding: 15px !important;
                 border-radius: 12px !important;
                 box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2) !important;
                 margin-bottom: 15px !important;
+            }}
+
+            /* ========================================================
+               3. CORRECTION DE L'ASSISTANT (CHAT ET ZONE D'ÉCRITURE)
+               ======================================================== */
+            
+            /* Force la zone où l'on tape la question à avoir un texte noir et fond blanc */
+            [data-testid="stChatInput"] textarea {{
+                color: #000000 !important;
+                background-color: #FFFFFF !important;
+            }}
+            
+            /* Force les bulles de messages (réponses de l'assistant) à être bien lisibles */
+            [data-testid="stChatMessage"] {{
+                background-color: rgba(255, 255, 255, 0.95) !important;
+                border-radius: 10px !important;
+                padding: 12px !important;
+                border: 1px solid #E2E8F0 !important;
+                margin-bottom: 10px !important;
+            }}
+            
+            /* Force le texte à l'intérieur des réponses de l'assistant à être noir/gris très foncé */
+            [data-testid="stChatMessage"] p, [data-testid="stChatMessage"] span, [data-testid="stChatMessage"] div {{
+                color: #1A202C !important;
+            }}
+
+            /* Assure que le texte tapé dans n'importe quel formulaire classique soit noir */
+            .stTextInput input, .stTextArea textarea {{
+                color: #000000 !important;
+                background-color: #FFFFFF !important;
             }}
             </style>
             """,
@@ -61,7 +89,7 @@ def appliquer_style(chemin_image):
     else:
         st.error(f"⚠️ Image '{chemin_image}' introuvable.")
 
-# On applique le style adapté aux mobiles
+# On active le style réparé
 appliquer_style("image.jpeg")
 
 # ==========================================
