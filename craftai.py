@@ -30,31 +30,38 @@ def appliquer_style(chemin_image):
         st.markdown(
             f"""
             <style>
-            /* On force TOUS les conteneurs de Streamlit à avoir le même fond et aucune marge */
+            /* CONFIGURATION PAR DÉFAUT (POUR ORDINATEUR) */
             html, body, [data-testid="stAppViewContainer"], [data-testid="stMainViewContainer"], .stApp {{
                 background-image: url("data:image/jpeg;base64,{bin_str}") !important;
-                background-size: cover !important;        /* Étire l'image pour remplir tout l'écran */
-                background-position: center center !important; /* Centre l'image horizontalement et verticalement */
-                background-repeat: no-repeat !important;   /* Empêche la répétition */
-                background-attachment: fixed !important;   /* Bloque le fond pendant le défilement */
-                height: 100vh !important;                  /* Force la hauteur sur 100% de l'écran visible */
-                width: 100vw !important;                   /* Force la largeur sur 100% de l'écran visible */
-                margin: 0 !important;
-                padding: 0 !important;
+                background-size: 400px !important; /* Taille normale sur grand écran */
+                background-repeat: repeat !important;
+                background-attachment: fixed !important;
             }}
 
-            /* Cette partie permet à ton contenu (textes, boutons) de flotter proprement par-dessus */
-            [data-testid="stHeader"] {{
-                background: transparent !important; /* Rend la barre du haut invisible */
+            /* CONFIGURATION SPÉCIALE POUR LES TÉLÉPHONES (Écrans de moins de 768px) */
+            @media (max-width: 768px) {{
+                html, body, [data-testid="stAppViewContainer"], [data-testid="stMainViewContainer"], .stApp {{
+                    /* On double presque la taille du motif sur téléphone pour qu'il soit grand et aéré ! */
+                    background-size: 700px !important; 
+                }}
+            }}
+
+            /* Les cartes blanches transparentes pour pouvoir lire ton texte (noir, vert, orange, rouge) */
+            .stMarkdown, .stButton, div[data-testid="stVerticalBlock"] > div, .stFileUploader {{
+                background-color: rgba(255, 255, 255, 0.94) !important;
+                padding: 15px !important;
+                border-radius: 12px !important;
+                box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2) !important;
+                margin-bottom: 15px !important;
             }}
             </style>
             """,
             unsafe_allow_html=True
         )
     else:
-        st.error(f"⚠️ Fichier image '{chemin_image}' introuvable.")
+        st.error(f"⚠️ Image '{chemin_image}' introuvable.")
 
-# On applique le fond
+# On applique le style adapté aux mobiles
 appliquer_style("image.jpeg")
 
 # ==========================================
