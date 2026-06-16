@@ -36,7 +36,7 @@ def appliquer_style(chemin_image):
                 background: linear-gradient(135deg, #0C351F 0%, #FAF8F5 100%) !important;
                 
                 /* ICI : Ton logo superposé par-dessus les couleurs */
-                background-image: url("data:image/png;base64,{bin_str}") !important;
+                background-image: url("data:image/jpeg;base64,{bin_str}") !important;
                 background-repeat: no-repeat !important;
                 background-position: center !important;
                 background-size: 550px !important; /* Taille de la carte */
