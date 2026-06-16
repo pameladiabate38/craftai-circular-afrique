@@ -710,7 +710,9 @@ if uploaded is not None:
         st.session_state.analysis = analysis
         st.session_state.length_cm = analysis.estimated_length_cm
         st.session_state.width_cm = analysis.estimated_width_cm
-        st.session_state.pieces = analysis.estimated_pieces           
+        st.session_state.pieces = analysis.estimated_pieces  
+        
+    st.success("Analyse terminee. Ouvrez l'onglet Idees & tutoriels.")
 else:
     st.session_state.analysis = None
     st.session_state.length_cm = 18.0
@@ -749,7 +751,6 @@ else:
         ),
     )
 
-    st.success("Analyse terminee. Ouvrez l'onglet Idees & tutoriels.")
     with preview:
         if uploaded is not None:
             image = Image.open(uploaded)
