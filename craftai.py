@@ -17,17 +17,54 @@ import numpy as np
 
 from PIL import Image
 import requests
-def appliquer_style():
-    st.markdown("""
-    <style>
-    [data-testid="stAppViewContainer"] {
-        background-color: #FDFBF7 !important;
-    }
-    h1, h2, h3, p, div {
-        color: #6D4C41 !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
+import base64
+
+# 1. LA FONCTION DE STYLE (Ta partie "def style" corrigée)
+def appliquer_style(chemin_image):
+    if os.path.exists(chemin_image):
+        # On transforme l'image en texte pour Streamlit
+        with open(chemin_image, "rb") as f:
+            data = f.read()
+        bin_str = base64.b64encode(data).decode()
+        
+        # On injecte le CSS pour les deux couleurs + l'image en même temps
+        st.markdown(
+            f"""
+            <style>
+            [data-testid="stAppViewContainer"] {{
+                /* ICI : Tes deux couleurs en dégradé (Vert CraftAI et Crème/Blanc) */
+                background: linear-gradient(135deg, #0C351F 0%, #FAF8F5 100%) !important;
+                
+                /* ICI : Ton logo superposé par-dessus les couleurs */
+                background-image: url("data:image/png;base64,{bin_str}") !important;
+                background-repeat: no-repeat !important;
+                background-position: center !important;
+                background-size: 550px !important; /* Taille de la carte */
+                background-attachment: fixed !important;
+            }}
+            
+            /* Pour que les textes restent lisibles sur le dégradé */
+            h1, h2, h3 {{
+                color: #0C351F !important; /* Titres en Vert foncé */
+            }}
+            p, span, label {{
+                color: #2D3748 !important; /* Textes en Gris foncé */
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+    else:
+        st.error(f"⚠️ Impossible de charger le fond. Le fichier '{chemin_image}' est introuvable.")
+
+# 2. TU APPELLES LA FONCTION JUSTE ICI
+# (Assure-toi que ton image s'appelle bien 'image.png' et est dans le même dossier)
+appliquer_style("image.png")
+
+
+# ==========================================
+# LE RESTE DE TON CODE (BOUTONS, TITRES...)
+# ==========================================
 # Configuration de la clé API
 # Remplacez "VOTRE_CLE_API_GEMINI" par votre vraie clé (laissez les guillemets)
 @st.cache_data
