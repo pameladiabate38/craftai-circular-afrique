@@ -20,47 +20,42 @@ import requests
 import base64
 
 # 1. LA FONCTION DE STYLE (Ta partie "def style" corrigée)
+
 def appliquer_style(chemin_image):
     if os.path.exists(chemin_image):
-        # On transforme l'image en texte pour Streamlit
         with open(chemin_image, "rb") as f:
             data = f.read()
         bin_str = base64.b64encode(data).decode()
         
-        # On injecte le CSS pour les deux couleurs + l'image en même temps
         st.markdown(
             f"""
             <style>
-            [data-testid="stAppViewContainer"] {{
-                /* ICI : Tes deux couleurs en dégradé (Vert CraftAI et Crème/Blanc) */
-                background: linear-gradient(135deg, #0C351F 0%, #FAF8F5 100%) !important;
-                
-                /* ICI : Ton logo superposé par-dessus les couleurs */
+            /* On force TOUS les conteneurs de Streamlit à avoir le même fond et aucune marge */
+            html, body, [data-testid="stAppViewContainer"], [data-testid="stMainViewContainer"], .stApp {{
                 background-image: url("data:image/jpeg;base64,{bin_str}") !important;
-                background-repeat: no-repeat !important;
-                background-position: center !important;
-                background-size: 550px !important; /* Taille de la carte */
-                background-attachment: fixed !important;
+                background-size: cover !important;        /* Étire l'image pour remplir tout l'écran */
+                background-position: center center !important; /* Centre l'image horizontalement et verticalement */
+                background-repeat: no-repeat !important;   /* Empêche la répétition */
+                background-attachment: fixed !important;   /* Bloque le fond pendant le défilement */
+                height: 100vh !important;                  /* Force la hauteur sur 100% de l'écran visible */
+                width: 100vw !important;                   /* Force la largeur sur 100% de l'écran visible */
+                margin: 0 !important;
+                padding: 0 !important;
             }}
-            
-            /* Pour que les textes restent lisibles sur le dégradé */
-            h1, h2, h3 {{
-                color: #0C351F !important; /* Titres en Vert foncé */
-            }}
-            p, span, label {{
-                color: #2D3748 !important; /* Textes en Gris foncé */
+
+            /* Cette partie permet à ton contenu (textes, boutons) de flotter proprement par-dessus */
+            [data-testid="stHeader"] {{
+                background: transparent !important; /* Rend la barre du haut invisible */
             }}
             </style>
             """,
             unsafe_allow_html=True
         )
     else:
-        st.error(f"⚠️ Impossible de charger le fond. Le fichier '{chemin_image}' est introuvable.")
+        st.error(f"⚠️ Fichier image '{chemin_image}' introuvable.")
 
-# 2. TU APPELLES LA FONCTION JUSTE ICI
-# (Assure-toi que ton image s'appelle bien 'image.png' et est dans le même dossier)
-appliquer_style("image.jpeg")
-
+# On applique le fond
+appliquer_style("fond_moderne.jpeg")
 
 # ==========================================
 # LE RESTE DE TON CODE (BOUTONS, TITRES...)
