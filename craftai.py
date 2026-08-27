@@ -99,7 +99,7 @@ MATERIALS = {
 "keywords": ["couture", "tissu africain", "wax", "chute de tissu"],
 "ideas": {
 "petite": [
-("Boucles d'oreilles eclat d'Afrique", "facile", 30, "Bijou leger a vendre en
+("Boucles d'oreilles eclat d'Afrique", "facile", 30, "Bijou leger a vendre en serie courte."),
 ("Porte-cles textile", "facile", 20, "Petit accessoire utile avec faible pert
 ("Patch decoratif", "facile", 15, "Customisation de sacs, vestes ou cahiers."
 ],
