@@ -18,7 +18,7 @@ import requests
 import base64
 # 1. LA FONCTION DE STYLE (Ta partie "def style" corrigée)
 def appliquer_style(chemin_image):
-if os.path.exists(chemin_image):
+    if os.path.exists(chemin_image):
 with open(chemin_image, "rb") as f:
 data = f.read()
 bin_str = base64.b64encode(data).decode()
