@@ -100,7 +100,7 @@ MATERIALS = {
 "ideas": {
 "petite": [
 ("Boucles d'oreilles eclat d'Afrique", "facile", 30, "Bijou leger a vendre en serie courte."),
-("Porte-cles textile", "facile", 20, "Petit accessoire utile avec faible pert
+("Porte-cles textile", "facile", 20, "Petit accessoire utile avec faible perte
 ("Patch decoratif", "facile", 15, "Customisation de sacs, vestes ou cahiers."
 ],
 "moyenne": [
