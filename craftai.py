@@ -81,7 +81,7 @@ background-color: #FFFFFF !important;
 """,
 unsafe_allow_html=True
 )
-   else:
+    else:
 st.error(f" Image '{chemin_image}' introuvable.")
 # On active le style réparé
 appliquer_style("image.jpeg")
