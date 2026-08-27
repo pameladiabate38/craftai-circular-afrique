@@ -99,14 +99,14 @@ MATERIALS = {
 "keywords": ["couture", "tissu africain", "wax", "chute de tissu"],
 "ideas": {
 "petite": [
-("Boucles d'oreilles eclat d'Afrique", "facile", 30, "Bijou leger a vendre en serie courte."),
-("Porte-cles textile", "facile", 20, "Petit accessoire utile avec faible perte
-("Patch decoratif", "facile", 15, "Customisation de sacs, vestes ou cahiers."
+("Boucles d'oreilles eclat d'Afrique", "facile", 30, "Bijou leger a vendre en ."),
+("Porte-cles textile", "facile", 20, "Petit accessoire utile avec faible perte."),
+("Patch decoratif", "facile", 15, "Customisation de sacs, vestes ou cahiers.").
 ],
 "moyenne": [
-("Pochette zippee", "moyen", 60, "Produit pratique pour telephone ou maquilla
+("Pochette zippee", "moyen", 60, "Produit pratique pour telephone ou maquillage."),
 ("Serre-tete en tissu", "facile", 35, "Creation rapide pour marche local."),
-("Mini trousse artisanale", "moyen", 55, "Objet vendable avec doublure simple
+("Mini trousse artisanale", "moyen", 55, "Objet vendable avec doublure simple."),
 ],
 "grande": [
 ("Sac tote mix-matieres", "moyen", 90, "Valorise plusieurs motifs ensemble.")
@@ -120,17 +120,17 @@ MATERIALS = {
 "keywords": ["cuir", "maroquinerie", "chute de cuir"],
 "ideas": {
 "petite": [
-("Etiquettes de marque", "facile", 20, "Ajoute une finition professionnelle a
+("Etiquettes de marque", "facile", 20, "Ajoute une finition professionnelle a ton etiquette."),
 ("Porte-carte minimal", "moyen", 45, "Petit produit premium."),
-("Boucles d'oreilles cuir", "facile", 30, "Bijou leger avec formes geometriqu
+("Boucles d'oreilles cuir", "facile", 30, "Bijou leger avec formes geometrique."),
 ],
 "moyenne": [
-("Porte-monnaie cuir", "moyen", 70, "Bon usage des morceaux rectangulaires.")
+("Porte-monnaie cuir", "moyen", 70, "Bon usage des morceaux rectangulaires."),
 ("Bracelet ajuste", "facile", 35, "Accessoire rapide a personnaliser."),
 ("Housse de lunettes", "moyen", 75, "Produit utile et durable."),
 ],
 "grande": [
-("Pochette enveloppe", "moyen", 100, "Creation elegante avec peu de coutures.
+("Pochette enveloppe", "moyen", 100, "Creation elegante avec peu de coutures."),
 ("Ceinture patchwork", "avance", 120, "Assemble plusieurs bandes restantes.")
 ("Mini sac bandouliere", "avance", 150, "Produit a forte valeur commerciale."
 ],
@@ -152,8 +152,8 @@ MATERIALS = {
 ],
 "grande": [
 ("Etagere murale", "avance", 150, "Creation visible pour interieur."),
-("Lampe artisanale", "avance", 180, "Produit distinctif pour marche creatif."
-("Tabouret bas", "avance", 210, "Reutilisation de grandes sections solides.")
+("Lampe artisanale", "avance", 180, "Produit distinctif pour marche creatif."),
+("Tabouret bas", "avance", 210, "Reutilisation de grandes sections solides."),
 ],
 },
 },
@@ -164,7 +164,7 @@ MATERIALS = {
 "petite": [
 ("Etiquettes cadeau", "facile", 15, "Valorise les petits restes imprimes."),
 ("Marque-pages", "facile", 20, "Produit simple en lots."),
-("Fleurs decoratives", "facile", 25, "Decoration pour emballages et evenement
+("Fleurs decoratives", "facile", 25, "Decoration pour emballages et evenements."),
 ],
 "moyenne": [
 ("Carnet recycle", "moyen", 50, "Papeterie utile a faible cout."),
@@ -195,7 +195,7 @@ MATERIALS = {
 "grande": [
 ("Lampe metal recycle", "avance", 180, "Creation forte pour demonstration."),
 ("Petit presentoir", "avance", 150, "Support pour marche artisanal."),
-("Decoration murale", "avance", 160, "Assemblage artistique a impact visuel."
+("Decoration murale", "avance", 160, "Assemblage artistique a impact visuel."),
 ],
 },
 },
