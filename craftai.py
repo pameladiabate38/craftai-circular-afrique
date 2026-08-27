@@ -301,7 +301,7 @@ workspace_width_cm = 40
 workspace_height_cm = 30
 estimated_length = max(3.0, round((box_width / width) * workspace_width_cm, 1))
 estimated_width = max(3.0, round((box_height / height) * workspace_height_cm, 1))
-confidence = "moyenne sans reference" if ratio > 0.18 else "faible sans reference
+confidence = "moyenne sans reference" if ratio > 0.18 else "faible sans reference"
 else:
 estimated_length = 18.0
 estimated_width = 12.0
