@@ -101,7 +101,7 @@ MATERIALS = {
 "petite": [
 ("Boucles d'oreilles eclat d'Afrique", "facile", 30, "Bijou leger a vendre en ."),
 ("Porte-cles textile", "facile", 20, "Petit accessoire utile avec faible perte."),
-("Patch decoratif", "facile", 15, "Customisation de sacs, vestes ou cahiers.").
+("Patch decoratif", "facile", 15, "Customisation de sacs, vestes ou cahiers."),
 ],
 "moyenne": [
 ("Pochette zippee", "moyen", 60, "Produit pratique pour telephone ou maquillage."),
@@ -109,7 +109,7 @@ MATERIALS = {
 ("Mini trousse artisanale", "moyen", 55, "Objet vendable avec doublure simple."),
 ],
 "grande": [
-("Sac tote mix-matieres", "moyen", 90, "Valorise plusieurs motifs ensemble.")
+("Sac tote mix-matieres", "moyen", 90, "Valorise plusieurs motifs ensemble."),
 ("Coussin decoratif", "moyen", 80, "Produit maison a bonne valeur percue."),
 ("Tablier creatif", "avance", 120, "Utile pour atelier ou cuisine."),
 ],
@@ -131,8 +131,8 @@ MATERIALS = {
 ],
 "grande": [
 ("Pochette enveloppe", "moyen", 100, "Creation elegante avec peu de coutures."),
-("Ceinture patchwork", "avance", 120, "Assemble plusieurs bandes restantes.")
-("Mini sac bandouliere", "avance", 150, "Produit a forte valeur commerciale."
+("Ceinture patchwork", "avance", 120, "Assemble plusieurs bandes restantes."),
+("Mini sac bandouliere", "avance", 150, "Produit a forte valeur commerciale."),
 ],
 },
 },
