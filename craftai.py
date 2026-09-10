@@ -590,164 +590,166 @@ with right:
         unsafe_allow_html=True,
     )
 with tab_scan:
-controls, preview = st.columns([0.9, 1.1], gap="large")
+    controls, preview = st.columns([0.9, 1.1], gap="large")
 with controls:
-st.subheader("Cadrez vos materiaux")
-uploaded = st.file_uploader("Photo des chutes", type=["jpg", "jpeg", "png", "webp"])
-material = st.selectbox("Type de materiau", list(MATERIALS.keys()))
-reference_label = st.selectbox(
-"Objet de reference pour mesurer",
-list(REFERENCE_OBJECTS.keys()),
-index=1,
-)
-st.info(
-"Placez la piece choisie a plat a cote du tissu. L'IA utilise son diametre connu pour calibrer la taille."
-)
+    st.subheader("Cadrez vos materiaux")
+    uploaded = st.file_uploader("Photo des chutes", type=["jpg", "jpeg", "png", "webp"])
+    material = st.selectbox("Type de materiau", list(MATERIALS.keys()))
+    reference_label = st.selectbox(
+        "Objet de reference pour mesurer",
+        list(REFERENCE_OBJECTS.keys()),
+        index=1,
+    )
+    st.info(
+        "Placez la piece choisie a plat a cote du tissu. L'IA utilise son diametre connu pour calibrer la taille."
+    )
 if uploaded is not None:
-if st.button("Analyser et proposer", type="primary", use_container_width=True):
-image = Image.open(uploaded)
-analysis = analyze_image(image, reference_label, REFERENCE_OBJECTS[reference_
-st.session_state.analysis = analysis
-st.session_state.length_cm = analysis.estimated_length_cm
-st.session_state.width_cm = analysis.estimated_width_cm
-st.session_state.pieces = analysis.estimated_pieces
-st.success("Analyse terminee. Ouvrez l'onglet Idees & tutoriels.")
-else:
-st.session_state.analysis = None
-st.session_state.length_cm = 18.0
-st.session_state.width_cm = 12.0
-st.session_state.pieces = 1
-st.session_state.material = material
-size = classify_size(
-st.session_state.length_cm,
-st.session_state.width_cm
-)
-ideas = get_ideas(material, size)
-price_ranges = [
-estimate_burkina_price(
-material,
-st.session_state.length_cm,
-st.session_state.width_cm,
-idea[1]
-)
-for idea in ideas
-]
-save_analysis(
-st.session_state.get("artisan_name", "artisane"),
-material,
-st.session_state.length_cm,
-st.session_state.width_cm,
-st.session_state.pieces,
-size,
-ideas,
-(
-min(price[0] for price in price_ranges),
-max(price[1] for price in price_ranges),
-),
-)
+    if st.button("Analyser et proposer", type="primary", use_container_width=True):
+        image = Image.open(uploaded)
+        analysis = analyze_image(image, reference_label, REFERENCE_OBJECTS[reference_
+        st.session_state.analysis = analysis
+        st.session_state.length_cm = analysis.estimated_length_cm
+        st.session_state.width_cm = analysis.estimated_width_cm
+        st.session_state.pieces = analysis.estimated_pieces
+        st.success("Analyse terminee. Ouvrez l'onglet Idees & tutoriels.")
+    else:
+        st.session_state.analysis = None
+        st.session_state.length_cm = 18.0
+        st.session_state.width_cm = 12.0
+        st.session_state.pieces = 1
+        st.session_state.material = material
+    size = classify_size(
+    st.session_state.length_cm,
+    st.session_state.width_cm
+    )
+    ideas = get_ideas(material, size)
+    price_ranges = [
+        estimate_burkina_price(
+        material,
+        st.session_state.length_cm,
+        st.session_state.width_cm,
+        idea[1]
+        )
+        for idea in ideas
+    ]
+    save_analysis(
+        st.session_state.get("artisan_name", "artisane"),
+        material,
+        st.session_state.length_cm,
+        st.session_state.width_cm,
+        st.session_state.pieces,
+        size,
+        ideas,
+        (min(price[0] for price in price_ranges),max(price[1] for price in price_ranges)),
+    )
 with preview:
-if uploaded is not None:
-image = Image.open(uploaded)
-st.image(image, caption="Photo importee", use_container_width=True)
-else:
-st.info("Importez une photo pour que l'IA estime automatiquement les dimensions."
-if st.session_state.analysis:
-st.write("Couleurs dominantes detectees")
-render_color_swatches(st.session_state.analysis.dominant_colors)
-m1, m2, m3 = st.columns(3)
-m1.metric("Image", f"{st.session_state.analysis.width} x {st.session_state.analys
-m2.metric("Contours", st.session_state.analysis.contours)
-m3.metric("Occupation", f"{st.session_state.analysis.object_ratio:.0%}")
-d1, d2, d3 = st.columns(3)
-d1.metric("Longueur estimee", f"{st.session_state.analysis.estimated_length_cm:g}
-d2.metric("Largeur estimee", f"{st.session_state.analysis.estimated_width_cm:g} c
-d3.metric("Confiance", st.session_state.analysis.confidence)
-if st.session_state.analysis.reference_label != "Aucune reference":
-if st.session_state.analysis.reference_detected:
-st.success(
-f"Reference detectee: {st.session_state.analysis.reference_label}. "
-f"Echelle: {st.session_state.analysis.pixels_per_cm:.1f} pixels/cm."
-)
-else:
-st.warning(
-"La piece de reference n'a pas ete detectee clairement. Reprenez la p
-)
+    if uploaded is not None:
+        image = Image.open(uploaded)
+        st.image(image, caption="Photo importee", use_container_width=True)
+    else:
+        st.info("Importez une photo pour que l'IA estime automatiquement les dimensions."
+    if st.session_state.analysis:
+        st.write("Couleurs dominantes detectees")
+        render_color_swatches(st.session_state.analysis.dominant_colors)
+        
+        m1, m2, m3 = st.columns(3)
+        m1.metric("Image", f"{st.session_state.analysis.width} x {st.session_state.analys
+        m2.metric("Contours", st.session_state.analysis.contours)
+        m3.metric("Occupation", f"{st.session_state.analysis.object_ratio:.0%}")
+        
+        d1, d2, d3 = st.columns(3)
+        d1.metric("Longueur estimee", f"{st.session_state.analysis.estimated_length_cm:g}
+        d2.metric("Largeur estimee", f"{st.session_state.analysis.estimated_width_cm:g} c
+        d3.metric("Confiance", st.session_state.analysis.confidence)
+        
+        if st.session_state.analysis.reference_label != "Aucune reference":
+            if st.session_state.analysis.reference_detected:
+                st.success(
+                    f"Reference detectee: {st.session_state.analysis.reference_label}. "
+                    f"Echelle: {st.session_state.analysis.pixels_per_cm:.1f} pixels/cm."
+                )
+            else:
+                st.warning(
+                "La piece de reference n'a pas ete detectee clairement. Reprenez la p
+                )
 with tab_results:
-material = st.session_state.get("material", "Tissu")
-length_cm = st.session_state.get("length_cm", 18.0)
-width_cm = st.session_state.get("width_cm", 12.0)
-pieces = st.session_state.get("pieces", 6)
-size = classify_size(length_cm, width_cm)
-ideas = get_ideas(material, size)
-st.subheader("Resultats proposes")
-st.subheader("Suggestions de l'IA (Expertise Artisanale)")
-dims = f"{length_cm} cm x {width_cm} cm"
-suggestions = obtenir_suggestions_ia(material, dims)
-st.markdown(suggestions)
-st.caption(f"Materiau: {material} | Dimensions: {length_cm:g} x {width_cm:g} cm | Categor
-cols = st.columns(3)
-for index, idea in enumerate(ideas):
-title, level, minutes, description = idea
-min_price, max_price = estimate_burkina_price(material, length_cm, width_cm, level)
-with cols[index]:
-st.markdown(
-f"""
-<div class="idea-card">
-<h3>{title}</h3>
-<span class="badge">Niveau: {level}</span>
-<span class="badge">{minutes} min</span>
-<p>{description}</p>
-<p><b>Prix estime au Burkina Faso :</b><br>{min_price:,} - {max_price:,}
-</div>
-""".replace(",", " "),
-unsafe_allow_html=True,
-)
-st.caption(
-"Les prix sont des estimations de demonstration pour le Burkina Faso. Ils doivent etr
-)
+    material = st.session_state.get("material", "Tissu")
+    length_cm = st.session_state.get("length_cm", 18.0)
+    width_cm = st.session_state.get("width_cm", 12.0)
+    pieces = st.session_state.get("pieces", 6)
+    size = classify_size(length_cm, width_cm)
+    ideas = get_ideas(material, size)
+    
+    st.subheader("Resultats proposes")
+    st.subheader("Suggestions de l'IA (Expertise Artisanale)")
+    dims = f"{length_cm} cm x {width_cm} cm"
+    suggestions = obtenir_suggestions_ia(material, dims)
+    st.markdown(suggestions)
+    st.caption(f"Materiau: {material} | Dimensions: {length_cm:g} x {width_cm:g} cm | Categorie: {size} ")
+    
+    cols = st.columns(3)
+    for index, idea in enumerate(ideas):
+        title, level, minutes, description = idea
+        min_price, max_price = estimate_burkina_price(material, length_cm, width_cm, level)
+        with cols[index]:
+            st.markdown(
+                f"""
+                <div class="idea-card">
+                <h3>{title}</h3>
+                <span class="badge">Niveau: {level}</span>
+                <span class="badge">{minutes} min</span>
+                <p>{description}</p>
+                <p><b>Prix estime au Burkina Faso :</b><br>{min_price:,} - {max_price:,}
+                </div>
+                """.replace(",", " "),
+                unsafe_allow_html=True,
+            )
+            st.caption("Les prix sont des estimations de demonstration pour le Burkina Faso. Ils doivent etre ajuster.")
 with tab_chat:
-st.subheader("Conversation avec l'IA")
-st.write("Posez une question sur les idees, les dimensions, les tutoriels ou le prix de v
-for role, message in st.session_state.chat_messages:
-with st.chat_message("assistant" if role == "ia" else "user"):
-st.write(message)
-user_message = st.chat_input("Exemple: quel prix de vente pour cette creation ?")
-if user_message:
-st.session_state.chat_messages.append(("utilisateur", user_message))
-reply = assistant_reply(user_message)
-st.session_state.chat_messages.append(("ia", reply))
-st.rerun()
+    st.subheader("Conversation avec l'IA")
+    st.write("Posez une question sur les idees, les dimensions, les tutoriels ou le prix de v
+    for role, message in st.session_state.chat_messages:
+        with st.chat_message("assistant" if role == "ia" else "user"):
+            st.write(message)
+            
+    user_message = st.chat_input("Exemple: quel prix de vente pour cette creation ?")
+    if user_message:
+        st.session_state.chat_messages.append(("utilisateur", user_message))
+        reply = assistant_reply(user_message)
+        st.session_state.chat_messages.append(("ia", reply))
+        st.rerun()
 with tab_history:
-st.subheader("Historique SQLite")
-st.write("Chaque analyse est sauvegardee dans une base SQLite locale et visible ici.")
-st.caption(f"Base de donnees: {DB_PATH}")
-rows = load_history()
-if not rows:
-st.info("Aucune analyse enregistree pour le moment. Lancez une analyse dans l'onglet
-else:
-for row in rows:
-(
-created_at,
-artisan_name,
-material,
-length_cm,
-width_cm,
-pieces,
-size_category,
-ideas_text,
-min_price,
-max_price,
-) = row
-st.markdown(
-f"""
-<div class="impact-card">
-<b>{created_at} - {artisan_name}</b><br>
-Materiau: {material} | Dimensions estimees: {length_cm:g} x {width_cm:g}
-Categorie: {size_category}<br>
-Idees: {ideas_text}<br>
-Prix estime Burkina Faso: {min_price:,} - {max_price:,} FCFA
-</div>
-<br>
-)
-""".replace(",", " "),
-unsafe_allow_html=True,
+    st.subheader("Historique SQLite")
+    st.write("Chaque analyse est sauvegardee dans une base SQLite locale et visible ici.")
+    st.caption(f"Base de donnees: {DB_PATH}")
+    rows = load_history()
+    if not rows:
+        st.info("Aucune analyse enregistree pour le moment. Lancez une analyse dans l'onglet
+    else:
+        for row in rows:
+            (
+                created_at,
+                artisan_name,
+                material,
+                length_cm,
+                width_cm,
+                pieces,
+                size_category,
+                ideas_text,
+                min_price,
+                max_price,
+            ) = row
+            st.markdown(
+                f"""
+                <div class="impact-card">
+                <b>{created_at} - {artisan_name}</b><br>
+                Materiau: {material} | Dimensions estimees: {length_cm:g} x {width_cm:g}
+                Categorie: {size_category}<br>
+                Idees: {ideas_text}<br>
+                Prix estime Burkina Faso: {min_price:,} - {max_price:,} FCFA
+                </div>
+                <br>
+                """.replace(",", " "),
+                unsafe_allow_html=True,
+            )
+
