@@ -21,19 +21,19 @@ def appliquer_style(chemin_image):
     if os.path.exists(chemin_image):
         with open(chemin_image, "rb") as f:
             data = f.read()
-bin_str = base64.b64encode(data).decode()
-st.markdown(
-f"""
-<style>
-/* 1. Ton fond d'écran */
-html, body, [data-testid="stAppViewContainer"], [data-testid="stMainViewContainer
-background-image: url("data:image/jpeg;base64,{bin_str}") !important;
-background-size: 400px !important;
-background-repeat: repeat !important;
-background-attachment: fixed !important;
-}}
-/* CONFIGURATION POUR LE CONTENU SUR TÉLÉPHONE */
-@media (max-width: 768px) {{
+        bin_str = base64.b64encode(data).decode()
+        st.markdown(
+            f"""
+            <style>
+            /* 1. Ton fond d'écran */
+            html, body, [data-testid="stAppViewContainer"], [data-testid="stMainViewContainer
+            background-image: url("data:image/jpeg;base64,{bin_str}") !important;
+            background-size: 400px !important;
+            background-repeat: repeat !important;
+            background-attachment: fixed !important;
+            }}
+            /* CONFIGURATION POUR LE CONTENU SUR TÉLÉPHONE */
+            @media (max-width: 768px) {{
 h1 {{
 font-size: 24px !important;
 }}
@@ -82,7 +82,7 @@ background-color: #FFFFFF !important;
 unsafe_allow_html=True
 )
     else:
-st.error(f" Image '{chemin_image}' introuvable.")
+        st.error(f" Image '{chemin_image}' introuvable.")
 # On active le style réparé
 appliquer_style("image.jpeg")
 # ==========================================
