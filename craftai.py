@@ -564,7 +564,7 @@ if "tutorials" not in st.session_state:
 st.session_state.tutorials = {}
 if "chat_messages" not in st.session_state:
 st.session_state.chat_messages = [
-("ia", "Bonjour, je peux aider a transformer vos chutes en creations vendables au Bur
+("ia", "Bonjour, je peux aider a transformer vos chutes en creations vendables au Burkina Faso.")
 ]
 with tab_home:
 with left:
