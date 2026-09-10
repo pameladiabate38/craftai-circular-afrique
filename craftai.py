@@ -278,10 +278,10 @@ pixels_per_cm = None
 reference_detected = False
 fabric_contours = meaningful
 if coin and reference_diameter_cm:
-coin_x, coin_y, coin_radius = coin
-coin_diameter_px = coin_radius * 2
-pixels_per_cm = coin_diameter_px / reference_diameter_cm
-reference_detected = True
+    coin_x, coin_y, coin_radius = coin
+    coin_diameter_px = coin_radius * 2
+    pixels_per_cm = coin_diameter_px / reference_diameter_cm
+    reference_detected = True
 def is_coin_contour(contour: np.ndarray) -> bool:
 x, y, box_width, box_height = cv2.boundingRect(contour)
 center_x = x + box_width / 2
