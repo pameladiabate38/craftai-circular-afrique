@@ -724,7 +724,7 @@ with tab_history:
     st.caption(f"Base de donnees: {DB_PATH}")
     rows = load_history()
     if not rows:
-        st.info("Aucune analyse enregistree pour le moment. Lancez une analyse dans l'onglet
+        st.info("Aucune analyse enregistree pour le moment. Lancez une analyse dans l'onglet Scan.")
     else:
         for row in rows:
             (
