@@ -462,17 +462,17 @@ def assistant_reply(message: str) -> str:
 # ==========================================================
 def obtenir_suggestions_ia(materiau: str, dimensions: str) -> str:
     try:
-prompt = f"""
-Tu es une experte en artisanat au Burkina Faso.
-Pour une chute de {materiau} de {dimensions}, propose 3 idées originales de création.
-Pour chaque idée, donne : le nom, le niveau de difficulté, et une estimation du prix en FCFA.
-"""
-completion = client.chat.completions.create(
-model="openai/gpt-oss-120b",
-messages=[{"role": "user", "content": prompt}]
-)
-return completion.choices[0].message.content
-except Exception as e:
+       prompt = f"""
+       Tu es une experte en artisanat au Burkina Faso.
+       Pour une chute de {materiau} de {dimensions}, propose 3 idées originales de création.
+       Pour chaque idée, donne : le nom, le niveau de difficulté, et une estimation du prix en FCFA.
+       """
+       completion = client.chat.completions.create(
+       model="openai/gpt-oss-120b",
+       messages=[{"role": "user", "content": prompt}]
+       )
+       return completion.choices[0].message.content
+    except Exception as e:
 if "429" in str(e):
 return "craftai : je suis un peu fatiguée aujourd'hui (quota dépassé). Revenez me voir plus tard."
 else:
