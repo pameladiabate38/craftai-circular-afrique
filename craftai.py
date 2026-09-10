@@ -478,13 +478,13 @@ def obtenir_suggestions_ia(materiau: str, dimensions: str) -> str:
         else:
             return f"Une erreur est survenue : {e}"
 def render_color_swatches(colors: Iterable[str]) -> None:
-chips = "".join(
-f"<span style='display:inline-block;width:34px;height:20px;border-radius:6px;"
-f"border:1px solid #d7c7af;background:{color};margin-right:8px'></span>"
-for color in colors
-)
-st.markdown(chips, unsafe_allow_html=True)
-st.markdown(
+    chips = "".join(
+        f"<span style='display:inline-block;width:34px;height:20px;border-radius:6px;"
+        f"border:1px solid #d7c7af;background:{color};margin-right:8px'></span>"
+        for color in colors
+    )
+    st.markdown(chips, unsafe_allow_html=True)
+    st.markdown(
 """
 <style>
 :root {
