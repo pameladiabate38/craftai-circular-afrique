@@ -293,164 +293,170 @@ def is_coin_contour(contour: np.ndarray) -> bool:
     return close_to_coin and box_width < coin_radius * 3.2 and box_height < coin_radius * 3.2
 fabric_contours = [contour for contour in meaningful if not is_coin_contour(contour)]
 if fabric_contours:
-largest = max(fabric_contours, key=cv2.contourArea)
-x, y, box_width, box_height = cv2.boundingRect(largest)
-if pixels_per_cm:
-estimated_length = max(1.0, round(box_width / pixels_per_cm, 1))
-estimated_width = max(1.0, round(box_height / pixels_per_cm, 1))
-confidence = "bonne avec reference"
+    largest = max(fabric_contours, key=cv2.contourArea)
+    x, y, box_width, box_height = cv2.boundingRect(largest)
+    if pixels_per_cm:
+        estimated_length = max(1.0, round(box_width / pixels_per_cm, 1))
+        estimated_width = max(1.0, round(box_height / pixels_per_cm, 1))
+        confidence = "bonne avec reference"
+    else:
+        workspace_width_cm = 40
+        workspace_height_cm = 30
+        estimated_length = max(3.0, round((box_width / width) * workspace_width_cm, 1))
+        estimated_width = max(3.0, round((box_height / height) * workspace_height_cm, 1))
+        confidence = "moyenne sans reference" if ratio > 0.18 else "faible sans reference"
 else:
-workspace_width_cm = 40
-workspace_height_cm = 30
-estimated_length = max(3.0, round((box_width / width) * workspace_width_cm, 1))
-estimated_width = max(3.0, round((box_height / height) * workspace_height_cm, 1))
-confidence = "moyenne sans reference" if ratio > 0.18 else "faible sans reference"
-else:
-estimated_length = 18.0
-estimated_width = 12.0
-confidence = "faible"
+    estimated_length = 18.0
+    estimated_width = 12.0
+    confidence = "faible"
 estimated_pieces = max(1, min(len(meaningful), 50))
 return ImageAnalysis(
-width,
-height,
-colors,
-ratio,
-len(meaningful),
-estimated_length,
-estimated_width,
-estimated_pieces,
-confidence,
-reference_label,
-reference_detected,
-pixels_per_cm,
+    width,
+    height,
+    colors,
+    ratio,
+    len(meaningful),
+    estimated_length,
+    estimated_width,
+    estimated_pieces,
+    confidence,
+    reference_label,
+    reference_detected,
+    pixels_per_cm,
 )
 def get_ideas(material: str, size: str) -> List[Tuple[str, str, int, str]]:
-return MATERIALS[material]["ideas"][size]
+    return MATERIALS[material]["ideas"][size]
+    
 def local_tutorial_steps(title: str, material: str) -> List[str]:
-material_action = {
-"Tissu": "coupez proprement les bords puis repassez la chute",
-"Cuir": "nettoyez le cuir puis marquez les trous avant assemblage",
-"Bois": "poncez les bords puis retirez la poussiere",
-"Papier / carton": "aplatissez la matiere puis renforcez les plis",
-"Metal": "limez les bords puis verifiez qu'ils ne coupent pas",
-}[material]
-return [
-f"Selectionnez les morceaux adaptes pour: {title}.",
-f"Preparez le materiau: {material_action}.",
-"Dessinez la forme sur la chute avec un crayon ou une craie.",
-"Decoupez ou assemblez progressivement en gardant les chutes restantes.",
-"Ajoutez la finition: couture, colle, poncage, vernis, fermoir ou decoration.",
-"Verifiez la solidite puis prenez une photo pour la vente.",
-]
+    material_action = {
+        "Tissu": "coupez proprement les bords puis repassez la chute",
+        "Cuir": "nettoyez le cuir puis marquez les trous avant assemblage",
+        "Bois": "poncez les bords puis retirez la poussiere",
+        "Papier / carton": "aplatissez la matiere puis renforcez les plis",
+        "Metal": "limez les bords puis verifiez qu'ils ne coupent pas",
+    }[material]
+    return [
+        f"Selectionnez les morceaux adaptes pour: {title}.",
+        f"Preparez le materiau: {material_action}.",
+        "Dessinez la forme sur la chute avec un crayon ou une craie.",
+        "Decoupez ou assemblez progressivement en gardant les chutes restantes.",
+        "Ajoutez la finition: couture, colle, poncage, vernis, fermoir ou decoration.",
+        "Verifiez la solidite puis prenez une photo pour la vente.",
+    ]
 def init_db() -> None:
-with sqlite3.connect(DB_PATH) as conn:
-conn.execute(
-"""
-CREATE TABLE IF NOT EXISTS analyses (
-id INTEGER PRIMARY KEY AUTOINCREMENT,
-created_at TEXT NOT NULL,
-artisan_name TEXT NOT NULL,
-material TEXT NOT NULL,
-length_cm REAL NOT NULL,
-width_cm REAL NOT NULL,
-pieces INTEGER NOT NULL,
-size_category TEXT NOT NULL,
-ideas TEXT NOT NULL,
-min_price INTEGER NOT NULL,
-max_price INTEGER NOT NULL
-)
-"""
-)
+    with sqlite3.connect(DB_PATH) as conn:
+       conn.execute(
+           """
+           CREATE TABLE IF NOT EXISTS analyses (
+               id INTEGER PRIMARY KEY AUTOINCREMENT,
+               created_at TEXT NOT NULL,
+               artisan_name TEXT NOT NULL,
+               material TEXT NOT NULL,
+               length_cm REAL NOT NULL,
+               width_cm REAL NOT NULL,
+               pieces INTEGER NOT NULL,
+               size_category TEXT NOT NULL,
+               ideas TEXT NOT NULL,
+               min_price INTEGER NOT NULL,
+               max_price INTEGER NOT NULL
+           )
+           """
+    )
 def save_analysis(
-artisan_name: str,
-material: str,
-length_cm: float,
-width_cm: float,
-pieces: int,
-size: str,
-ideas: List[Tuple[str, str, int, str]],
-price_range: Tuple[int, int],
+    artisan_name: str,
+    material: str,
+    length_cm: float,
+    width_cm: float,
+    pieces: int,
+    size: str,
+    ideas: List[Tuple[str, str, int, str]],
+    price_range: Tuple[int, int],
 ) -> None:
-with sqlite3.connect(DB_PATH) as conn:
-conn.execute(
-"""
-INSERT INTO analyses (
-created_at, artisan_name, material, length_cm, width_cm,
-pieces, size_category, ideas, min_price, max_price
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-)
-""",
-(
-datetime.now().strftime("%Y-%m-%d %H:%M"),
-artisan_name,
-material,
-length_cm,
-width_cm,
-pieces,
-size,
-", ".join(idea[0] for idea in ideas),
-price_range[0],
-price_range[1],
-),
+    with sqlite3.connect(DB_PATH) as conn:
+        conn.execute(
+            """
+            INSERT INTO analyses (
+                created_at, artisan_name, material, length_cm, width_cm,
+                pieces, size_category, ideas, min_price, max_price
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                datetime.now().strftime("%Y-%m-%d %H:%M"),
+                artisan_name,
+                material,
+                length_cm,
+                width_cm,
+                pieces,
+                size,
+                ", ".join(idea[0] for idea in ideas),
+                price_range[0],
+                price_range[1],
+            ),
 )
 def load_history() -> list[tuple]:
-with sqlite3.connect(DB_PATH) as conn:
-return conn.execute(
-"""
-SELECT created_at, artisan_name, material, length_cm, width_cm,
-pieces, size_category, ideas, min_price, max_price
-FROM analyses
-ORDER BY id DESC
-LIMIT 30
-"""
-).fetchall()
+    with sqlite3.connect(DB_PATH) as conn:
+        return conn.execute(
+            """
+            SELECT created_at, artisan_name, material, length_cm, width_cm,
+                   pieces, size_category, ideas, min_price, max_price
+            FROM analyses
+            ORDER BY id DESC
+            LIMIT 30
+            """
+        ).fetchall()
 def estimate_impact(material: str, length_cm: float, width_cm: float, pieces: int) -> tuple[f
-area = length_cm * width_cm
-saved_kg = area * MATERIALS[material]["unit_weight"] * pieces / 1000
-revenue = max(1000, int(math.ceil(area / 80) * 500 * pieces))
-return round(saved_kg, 2), revenue
+    area = length_cm * width_cm
+    saved_kg = area * MATERIALS[material]["unit_weight"] * pieces / 1000
+    revenue = max(1000, int(math.ceil(area / 80) * 500 * pieces))
+    return round(saved_kg, 2), revenue
+
 def estimate_burkina_price(material: str, length_cm: float, width_cm: float, level: str) -> t
-area = length_cm * width_cm
-material_base = {
-"Tissu": 1500,
-"Cuir": 2500,
-"Bois": 3000,
-"Papier / carton": 1000,
-"Metal": 3500,
-}[material]
-level_factor = {"facile": 1.0, "moyen": 1.45, "avance": 2.0}[level]
-size_factor = max(0.8, min(area / 350, 3.2))
-center = material_base * level_factor * size_factor
-min_price = int(round(center * 0.8 / 500) * 500)
-max_price = int(round(center * 1.25 / 500) * 500)
-return max(500, min_price), max(1000, max_price)
+    area = length_cm * width_cm
+    material_base = {
+        "Tissu": 1500,
+        "Cuir": 2500,
+        "Bois": 3000,
+        "Papier / carton": 1000,
+        "Metal": 3500,
+    }[material]
+    level_factor = {"facile": 1.0, "moyen": 1.45, "avance": 2.0}[level]
+    size_factor = max(0.8, min(area / 350, 3.2))
+    center = material_base * level_factor * size_factor
+    min_price = int(round(center * 0.8 / 500) * 500)
+    max_price = int(round(center * 1.25 / 500) * 500)
+    return max(500, min_price), max(1000, max_price)
+    
 def assistant_reply(message: str) -> str:
-text = message.lower()
-material = st.session_state.get("material", "Tissu")
-length_cm = st.session_state.get("length_cm", 18.0)
-width_cm = st.session_state.get("width_cm", 12.0)
-size = classify_size(length_cm, width_cm)
-ideas = get_ideas(material, size)
-if "prix" in text or "vente" in text or "fcfa" in text:
-ranges = [estimate_burkina_price(material, length_cm, width_cm, idea[1]) for idea in
-return (
-f"Pour le Burkina Faso, je proposerais une fourchette de demonstration entre "
-f"{min(price[0] for price in ranges):,} et {max(price[1] for price in ranges):,}
-"a ajuster selon la finition, le quartier, le temps de travail et le client."
-).replace(",", " ")
-if "idee" in text or "faire" in text or "creer" in text:
-return "Voici mes 3 pistes: " + ", ".join(idea[0] for idea in ideas) + "."
-if "dimension" in text or "taille" in text:
-analysis = st.session_state.get("analysis")
-if analysis and analysis.reference_detected:
-return (
-f"L'estimation actuelle est {length_cm:g} cm x {width_cm:g} cm. "
-f"Elle utilise la reference: {analysis.reference_label}."
-)
-return f"L'estimation actuelle est {length_cm:g} cm x {width_cm:g} cm. Sans piece ou
-if "bonjour" in text or "salut" in text:
-return "Bonjour, je suis l'assistante CraftAI. Je peux aider a choisir une creation,
-return "Je peux vous aider a choisir une idee, estimer un prix de vente au Burkina Faso o
+    text = message.lower()
+    material = st.session_state.get("material", "Tissu")
+    length_cm = st.session_state.get("length_cm", 18.0)
+    width_cm = st.session_state.get("width_cm", 12.0)
+    size = classify_size(length_cm, width_cm)
+    ideas = get_ideas(material, size)
+    
+    if "prix" in text or "vente" in text or "fcfa" in text:
+        ranges = [estimate_burkina_price(material, length_cm, width_cm, idea[1]) for idea in
+        return (
+            f"Pour le Burkina Faso, je proposerais une fourchette de demonstration entre "
+            f"{min(price[0] for price in ranges):,} et {max(price[1] for price in ranges):,}
+            f"a ajuster selon la finition, le quartier, le temps de travail et le client."
+        ).replace(",", " ")
+       
+    if "idee" in text or "faire" in text or "creer" in text:
+        return "Voici mes 3 pistes: " + ", ".join(idea[0] for idea in ideas) + "."
+        
+    if "dimension" in text or "taille" in text:
+        analysis = st.session_state.get("analysis")
+        if analysis and analysis.reference_detected:
+            return (
+                f"L'estimation actuelle est {length_cm:g} cm x {width_cm:g} cm. "
+                f"Elle utilise la reference: {analysis.reference_label}."
+            )
+        return f"L'estimation actuelle est {length_cm:g} cm x {width_cm:g} cm. Sans piece ou reference."
+    if "bonjour" in text or "salut" in text:
+        return "Bonjour, je suis l'assistante CraftAI. Je peux aider a choisir une creation,estimer un prix ou proposez des tutoriels."
+    return "Je peux vous aider a choisir une idee, estimer un prix de vente au Burkina Faso ou expliquer un tutoriel."
 # ==========================================================
 # FONCTION IA (CORRIGÉE : nom du modèle Groq mis à jour)
 # ==========================================================
