@@ -567,28 +567,28 @@ if "chat_messages" not in st.session_state:
 ("ia", "Bonjour, je peux aider a transformer vos chutes en creations vendables au Burkina Faso.")
 ]
 with tab_home:
+    left, right = st.columns([1.15, 0.85], gap="large")
 with left:
-left, right = st.columns([1.15, 0.85], gap="large")
-artisan_name = st.text_input("Entrez votre nom", value=st.session_state.get("artisan_name", ""))
-st.session_state.artisan_name = artisan_name.strip() or "artisane"
-st.subheader(f"Bonjour, {st.session_state.artisan_name}")
-st.write(
-"Photographiez vos materiaux restants. L'IA estime les dimensions, reconnait les couleurs et proposes des idees."
-)
+    artisan_name = st.text_input("Entrez votre nom", value=st.session_state.get("artisan_name", ""))
+    st.session_state.artisan_name = artisan_name.strip() or "artisane"
+    st.subheader(f"Bonjour, {st.session_state.artisan_name}")
+    st.write(
+        "Photographiez vos materiaux restants. L'IA estime les dimensions, reconnait les couleurs et proposes des idees."
+    )
 with right:
-st.markdown(
-"""
-<div class="impact-card">
-<b>Comment ca marche ?</b><br><br>
-1. Photographier les chutes<br>
-2. Estimer les dimensions et couleurs<br>
-3. Proposer 3 idees realistes<br>
-4. Trouver des tutoriels<br>
-5. Valoriser ou vendre la creation
-</div>
-""",
-unsafe_allow_html=True,
-)
+    st.markdown(
+        """
+        <div class="impact-card">
+        <b>Comment ca marche ?</b><br><br>
+        1. Photographier les chutes<br>
+        2. Estimer les dimensions et couleurs<br>
+        3. Proposer 3 idees realistes<br>
+        4. Trouver des tutoriels<br>
+        5. Valoriser ou vendre la creation
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
 with tab_scan:
 controls, preview = st.columns([0.9, 1.1], gap="large")
 with controls:
