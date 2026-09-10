@@ -606,7 +606,7 @@ with controls:
 if uploaded is not None:
     if st.button("Analyser et proposer", type="primary", use_container_width=True):
         image = Image.open(uploaded)
-        analysis = analyze_image(image, reference_label, REFERENCE_OBJECTS[reference_
+        analysis = analyze_image(image, reference_label, REFERENCE_OBJECTS[reference_label])
         st.session_state.analysis = analysis
         st.session_state.length_cm = analysis.estimated_length_cm
         st.session_state.width_cm = analysis.estimated_width_cm
