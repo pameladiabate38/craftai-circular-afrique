@@ -228,28 +228,28 @@ def classify_size(length_cm: float, width_cm: float) -> str:
        return "moyenne"
     return "grande"
 def detect_reference_coin(gray: np.ndarray) -> Optional[Tuple[int, int, int]]:
-height, width = gray.shape[:2]
-blurred = cv2.medianBlur(gray, 5)
-min_radius = max(8, int(min(width, height) * 0.025))
-max_radius = max(min_radius + 4, int(min(width, height) * 0.18))
-circles = cv2.HoughCircles(
-blurred,
-cv2.HOUGH_GRADIENT,
-dp=1.2,
-minDist=min(width, height) / 4,
-param1=90,
-param2=28,
-minRadius=min_radius,
-maxRadius=max_radius,
+    height, width = gray.shape[:2]
+    blurred = cv2.medianBlur(gray, 5)
+    min_radius = max(8, int(min(width, height) * 0.025))
+    max_radius = max(min_radius + 4, int(min(width, height) * 0.18))
+    circles = cv2.HoughCircles(
+        blurred,
+        cv2.HOUGH_GRADIENT,
+        dp=1.2,
+        minDist=min(width, height) / 4,
+        param1=90,
+        param2=28,
+        minRadius=min_radius,
+        maxRadius=max_radius,
 )
 if circles is None:
-return None
+    return None
 candidates = np.round(circles[0, :]).astype(int)
-return tuple(max(candidates, key=lambda item: item[2]))
+    return tuple(max(candidates, key=lambda item: item[2]))
 def analyze_image(
-image: Image.Image,
-reference_label: str = "Aucune reference",
-reference_diameter_cm: Optional[float] = None,
+    image: Image.Image,
+    reference_label: str = "Aucune reference",
+    reference_diameter_cm: Optional[float] = None,
 ) -> ImageAnalysis:
 rgb = np.array(image.convert("RGB"))
 height, width = rgb.shape[:2]
