@@ -411,7 +411,7 @@ def estimate_impact(material: str, length_cm: float, width_cm: float, pieces: in
     revenue = max(1000, int(math.ceil(area / 80) * 500 * pieces))
     return round(saved_kg, 2), revenue
 
-def estimate_burkina_price(material: str, length_cm: float, width_cm: float, level: str) -> t
+def estimate_burkina_price(material: str, length_cm: float, width_cm: float, level: str) -> tuple[int, int]:
     area = length_cm * width_cm
     material_base = {
         "Tissu": 1500,
