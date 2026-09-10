@@ -461,7 +461,7 @@ def assistant_reply(message: str) -> str:
 # FONCTION IA (CORRIGÉE : nom du modèle Groq mis à jour)
 # ==========================================================
 def obtenir_suggestions_ia(materiau: str, dimensions: str) -> str:
-try:
+    try:
 prompt = f"""
 Tu es une experte en artisanat au Burkina Faso.
 Pour une chute de {materiau} de {dimensions}, propose 3 idées originales de création.
