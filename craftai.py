@@ -601,7 +601,7 @@ list(REFERENCE_OBJECTS.keys()),
 index=1,
 )
 st.info(
-"Placez la piece choisie a plat a cote du tissu. L'IA utilise son diametre connu
+"Placez la piece choisie a plat a cote du tissu. L'IA utilise son diametre connu pour calibrer la taille."
 )
 if uploaded is not None:
 if st.button("Analyser et proposer", type="primary", use_container_width=True):
