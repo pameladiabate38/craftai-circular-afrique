@@ -221,12 +221,12 @@ class ImageAnalysis:
     reference_detected: bool
     pixels_per_cm: Optional[float]
 def classify_size(length_cm: float, width_cm: float) -> str:
-area = length_cm * width_cm
-if area < 250:
-return "petite"
-if area < 1200:
-return "moyenne"
-return "grande"
+    area = length_cm * width_cm
+    if area < 250:
+        return "petite"
+    if area < 1200:
+       return "moyenne"
+    return "grande"
 def detect_reference_coin(gray: np.ndarray) -> Optional[Tuple[int, int, int]]:
 height, width = gray.shape[:2]
 blurred = cv2.medianBlur(gray, 5)
