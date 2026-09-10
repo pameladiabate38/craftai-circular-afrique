@@ -569,7 +569,7 @@ st.session_state.chat_messages = [
 with tab_home:
 with left:
 left, right = st.columns([1.15, 0.85], gap="large")
-artisan_name = st.text_input("Entrez votre nom", value=st.session_state.get("artisan_
+artisan_name = st.text_input("Entrez votre nom", value=st.session_state.get("artisan_name", ""))
 st.session_state.artisan_name = artisan_name.strip() or "artisane"
 st.subheader(f"Bonjour, {st.session_state.artisan_name}")
 st.write(
