@@ -573,7 +573,7 @@ artisan_name = st.text_input("Entrez votre nom", value=st.session_state.get("art
 st.session_state.artisan_name = artisan_name.strip() or "artisane"
 st.subheader(f"Bonjour, {st.session_state.artisan_name}")
 st.write(
-"Photographiez vos materiaux restants. L'IA estime les dimensions, reconnait les
+"Photographiez vos materiaux restants. L'IA estime les dimensions, reconnait les couleurs et proposes des idees."
 )
 with right:
 st.markdown(
