@@ -658,8 +658,8 @@ with preview:
         m3.metric("Occupation", f"{st.session_state.analysis.object_ratio:.0%}")
         
         d1, d2, d3 = st.columns(3)
-        d1.metric("Longueur estimee", f"{st.session_state.analysis.estimated_length_cm:g}
-        d2.metric("Largeur estimee", f"{st.session_state.analysis.estimated_width_cm:g} c
+        d1.metric("Longueur estimee", f"{st.session_state.analysis.estimated_length_cm:g} cm")
+        d2.metric("Largeur estimee", f"{st.session_state.analysis.estimated_width_cm:g} cm")
         d3.metric("Confiance", st.session_state.analysis.confidence)
         
         if st.session_state.analysis.reference_label != "Aucune reference":
