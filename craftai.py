@@ -474,7 +474,7 @@ messages=[{"role": "user", "content": prompt}]
 return completion.choices[0].message.content
 except Exception as e:
 if "429" in str(e):
-return "craftai : je suis un peu fatiguée aujourd'hui (quota dépassé). Revenez me
+return "craftai : je suis un peu fatiguée aujourd'hui (quota dépassé). Revenez me voir plus tard."
 else:
 return f"Une erreur est survenue : {e}"
 def render_color_swatches(colors: Iterable[str]) -> None:
