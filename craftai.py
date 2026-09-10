@@ -647,7 +647,7 @@ with preview:
         image = Image.open(uploaded)
         st.image(image, caption="Photo importee", use_container_width=True)
     else:
-        st.info("Importez une photo pour que l'IA estime automatiquement les dimensions."
+        st.info("Importez une photo pour que l'IA estime automatiquement les dimensions.")
     if st.session_state.analysis:
         st.write("Couleurs dominantes detectees")
         render_color_swatches(st.session_state.analysis.dominant_colors)
