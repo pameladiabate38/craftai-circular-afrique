@@ -473,10 +473,10 @@ def obtenir_suggestions_ia(materiau: str, dimensions: str) -> str:
        )
        return completion.choices[0].message.content
     except Exception as e:
-if "429" in str(e):
-return "craftai : je suis un peu fatiguée aujourd'hui (quota dépassé). Revenez me voir plus tard."
-else:
-return f"Une erreur est survenue : {e}"
+        if "429" in str(e):
+            return "craftai : je suis un peu fatiguée aujourd'hui (quota dépassé). Revenez me voir plus tard."
+        else:
+            return f"Une erreur est survenue : {e}"
 def render_color_swatches(colors: Iterable[str]) -> None:
 chips = "".join(
 f"<span style='display:inline-block;width:34px;height:20px;border-radius:6px;"
