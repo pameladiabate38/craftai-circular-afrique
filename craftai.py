@@ -251,17 +251,17 @@ def analyze_image(
     reference_label: str = "Aucune reference",
     reference_diameter_cm: Optional[float] = None,
 ) -> ImageAnalysis:
-rgb = np.array(image.convert("RGB"))
-height, width = rgb.shape[:2]
-small = cv2.resize(rgb, (80, 80), interpolation=cv2.INTER_AREA)
-pixels = small.reshape((-1, 3)).astype(np.float32)
-_, labels, centers = cv2.kmeans(
-pixels,
-4,
-None,
-(cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 1.0),
-3,
-cv2.KMEANS_PP_CENTERS,
+    rgb = np.array(image.convert("RGB"))
+    height, width = rgb.shape[:2]
+    small = cv2.resize(rgb, (80, 80), interpolation=cv2.INTER_AREA)
+    pixels = small.reshape((-1, 3)).astype(np.float32)
+    _, labels, centers = cv2.kmeans(
+        pixels,
+        4,
+        None,
+        (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 1.0),
+        3,
+        cv2.KMEANS_PP_CENTERS,
 )
 counts = np.bincount(labels.flatten())
 ordered = centers[np.argsort(counts)[::-1]].astype(int)
