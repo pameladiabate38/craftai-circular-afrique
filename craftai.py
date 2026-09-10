@@ -653,7 +653,7 @@ with preview:
         render_color_swatches(st.session_state.analysis.dominant_colors)
         
         m1, m2, m3 = st.columns(3)
-        m1.metric("Image", f"{st.session_state.analysis.width} x {st.session_state.analys
+        m1.metric("Image", f"{st.session_state.analysis.width} x {st.session_state.analysis.height}")
         m2.metric("Contours", st.session_state.analysis.contours)
         m3.metric("Occupation", f"{st.session_state.analysis.object_ratio:.0%}")
         
