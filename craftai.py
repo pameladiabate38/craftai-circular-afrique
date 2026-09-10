@@ -439,7 +439,7 @@ def assistant_reply(message: str) -> str:
         ranges = [estimate_burkina_price(material, length_cm, width_cm, idea[1]) for idea in ideas]
         return (
             f"Pour le Burkina Faso, je proposerais une fourchette de demonstration entre "
-            f"{min(price[0] for price in ranges):,} et {max(price[1] for price in ranges):,}
+            f"{min(price[0] for price in ranges):,} et {max(price[1] for price in ranges):,} "
             f"a ajuster selon la finition, le quartier, le temps de travail et le client."
         ).replace(",", " ")
        
