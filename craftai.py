@@ -670,7 +670,7 @@ with preview:
                 )
             else:
                 st.warning(
-                "La piece de reference n'a pas ete detectee clairement. Reprenez la p
+                "La piece de reference n'a pas ete detectee clairement. Reprenez la photo."
                 )
 with tab_results:
     material = st.session_state.get("material", "Tissu")
