@@ -441,7 +441,7 @@ def assistant_reply(message: str) -> str:
             f"Pour le Burkina Faso, je proposerais une fourchette de demonstration entre "
             f"{min(price[0] for price in ranges):,} et {max(price[1] for price in ranges):,}
             f"a ajuster selon la finition, le quartier, le temps de travail et le client."
-        ).replace(",", " ")
+    ).replace(",", " ")
        
     if "idee" in text or "faire" in text or "creer" in text:
         return "Voici mes 3 pistes: " + ", ".join(idea[0] for idea in ideas) + "."
