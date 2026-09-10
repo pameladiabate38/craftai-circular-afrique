@@ -707,7 +707,7 @@ with tab_results:
             st.caption("Les prix sont des estimations de demonstration pour le Burkina Faso. Ils doivent etre ajuster.")
 with tab_chat:
     st.subheader("Conversation avec l'IA")
-    st.write("Posez une question sur les idees, les dimensions, les tutoriels ou le prix de v
+    st.write("Posez une question sur les idees, les dimensions, les tutoriels ou le prix de vente.")
     for role, message in st.session_state.chat_messages:
         with st.chat_message("assistant" if role == "ia" else "user"):
             st.write(message)
