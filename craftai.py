@@ -405,7 +405,7 @@ def load_history() -> list[tuple]:
             LIMIT 30
             """
         ).fetchall()
-def estimate_impact(material: str, length_cm: float, width_cm: float, pieces: int) -> tuple[f
+def estimate_impact(material: str, length_cm: float, width_cm: float, pieces: int) -> tuple[float, int]:
     area = length_cm * width_cm
     saved_kg = area * MATERIALS[material]["unit_weight"] * pieces / 1000
     revenue = max(1000, int(math.ceil(area / 80) * 500 * pieces))
