@@ -246,6 +246,7 @@ if circles is None:
     return None
 candidates = np.round(circles[0, :]).astype(int)
 return tuple(max(candidates, key=lambda item: item[2]))
+
 def analyze_image(
     image: Image.Image,
     reference_label: str = "Aucune reference",
