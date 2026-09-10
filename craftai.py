@@ -436,7 +436,7 @@ def assistant_reply(message: str) -> str:
     ideas = get_ideas(material, size)
     
     if "prix" in text or "vente" in text or "fcfa" in text:
-        ranges = [estimate_burkina_price(material, length_cm, width_cm, idea[1]) for idea in
+        ranges = [estimate_burkina_price(material, length_cm, width_cm, idea[1]) for idea in ideas]
         return (
             f"Pour le Burkina Faso, je proposerais une fourchette de demonstration entre "
             f"{min(price[0] for price in ranges):,} et {max(price[1] for price in ranges):,}
