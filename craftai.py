@@ -559,11 +559,11 @@ tab_home, tab_scan, tab_results, tab_chat, tab_history = st.tabs(
 ["Accueil", "Scanner", "Idees & tutoriels", "Assistant IA", "Historique"]
 )
 if "analysis" not in st.session_state:
-st.session_state.analysis = None
+     st.session_state.analysis = None
 if "tutorials" not in st.session_state:
-st.session_state.tutorials = {}
+     st.session_state.tutorials = {}
 if "chat_messages" not in st.session_state:
-st.session_state.chat_messages = [
+     st.session_state.chat_messages = [
 ("ia", "Bonjour, je peux aider a transformer vos chutes en creations vendables au Burkina Faso.")
 ]
 with tab_home:
