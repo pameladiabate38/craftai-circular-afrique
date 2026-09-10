@@ -283,11 +283,14 @@ if coin and reference_diameter_cm:
     pixels_per_cm = coin_diameter_px / reference_diameter_cm
     reference_detected = True
 def is_coin_contour(contour: np.ndarray) -> bool:
-x, y, box_width, box_height = cv2.boundingRect(contour)
-center_x = x + box_width / 2
-center_y = y + box_height / 2
-close_to_coin = abs(center_x - coin_x) < coin_radius * 1.5 and abs(center_y - coi
-return close_to_coin and box_width < coin_radius * 3.2 and box_height < coin_radi
+    x, y, box_width, box_height = cv2.boundingRect(contour)
+    center_x = x + box_width / 2
+    center_y = y + box_height / 2
+    close_to_coin = (
+        abs(center_x - coin_x) < coin_radius * 1.5 
+        and abs(center_y - coin_y) < coin_radius * 1.5
+    )
+    return close_to_coin and box_width < coin_radius * 3.2 and box_height < coin_radius * 3.2
 fabric_contours = [contour for contour in meaningful if not is_coin_contour(contour)]
 if fabric_contours:
 largest = max(fabric_contours, key=cv2.contourArea)
