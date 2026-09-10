@@ -208,18 +208,18 @@ REFERENCE_OBJECTS = {
 }
 @dataclass
 class ImageAnalysis:
-width: int
-height: int
-dominant_colors: List[str]
-object_ratio: float
-contours: int
-estimated_length_cm: float
-estimated_width_cm: float
-estimated_pieces: int
-confidence: str
-reference_label: str
-reference_detected: bool
-pixels_per_cm: Optional[float]
+    width: int
+    height: int
+    dominant_colors: List[str]
+    object_ratio: float
+    contours: int
+    estimated_length_cm: float
+    estimated_width_cm: float
+    estimated_pieces: int
+    confidence: str
+    reference_label: str
+    reference_detected: bool
+    pixels_per_cm: Optional[float]
 def classify_size(length_cm: float, width_cm: float) -> str:
 area = length_cm * width_cm
 if area < 250:
