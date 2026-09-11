@@ -242,8 +242,8 @@ def detect_reference_coin(gray: np.ndarray) -> Optional[Tuple[int, int, int]]:
         minRadius=min_radius,
         maxRadius=max_radius,
     )
-if circles is None:
-    return None
+    if circles is None:
+        return None
 candidates = np.round(circles[0, :]).astype(int)
 return tuple(max(candidates, key=lambda item: item[2]))
 
