@@ -244,8 +244,8 @@ def detect_reference_coin(gray: np.ndarray) -> Optional[Tuple[int, int, int]]:
     )
     if circles is None:
         return None
-candidates = np.round(circles[0, :]).astype(int)
-return tuple(max(candidates, key=lambda item: item[2]))
+    candidates = np.round(circles[0, :]).astype(int)
+    return tuple(max(candidates, key=lambda item: item[2]))
 
 def analyze_image(
     image: Image.Image,
