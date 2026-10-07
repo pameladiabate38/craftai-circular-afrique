@@ -311,7 +311,6 @@ else:
     estimated_width = 12.0
     confidence = "faible"
     estimated_pieces = max(1, min(len(meaningful), 50))
-    
     return ImageAnalysis(
     width,
     height,
