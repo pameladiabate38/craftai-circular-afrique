@@ -325,8 +325,8 @@ def analyze_image(
         reference_detected,
         pixels_per_cm,
     )
-    def get_ideas(material: str, size: str) -> List[Tuple[str, str, int, str]]:
-        return MATERIALS[material]["ideas"][size]
+def get_ideas(material: str, size: str) -> List[Tuple[str, str, int, str]]:
+    return MATERIALS[material]["ideas"][size]
     
 def local_tutorial_steps(title: str, material: str) -> List[str]:
     material_action = {
