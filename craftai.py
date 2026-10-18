@@ -263,69 +263,69 @@ def analyze_image(
         (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 20, 1.0),
         3,
         cv2.KMEANS_PP_CENTERS,
-)
-counts = np.bincount(labels.flatten())
-ordered = centers[np.argsort(counts)[::-1]].astype(int)
-colors = [f"#{r:02x}{g:02x}{b:02x}" for r, g, b in ordered[:3]]
-gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
-blur = cv2.GaussianBlur(gray, (5, 5), 0)
-edges = cv2.Canny(blur, 60, 150)
-contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-meaningful = [c for c in contours if cv2.contourArea(c) > 250]
-object_area = sum(cv2.contourArea(c) for c in meaningful)
-ratio = min(object_area / max(width * height, 1), 1.0)
-coin = detect_reference_coin(gray) if reference_diameter_cm else None
-pixels_per_cm = None
-reference_detected = False
-fabric_contours = meaningful
-if coin and reference_diameter_cm:
-    coin_x, coin_y, coin_radius = coin
-    coin_diameter_px = coin_radius * 2
-    pixels_per_cm = coin_diameter_px / reference_diameter_cm
-    reference_detected = True
-def is_coin_contour(contour: np.ndarray) -> bool:
-    x, y, box_width, box_height = cv2.boundingRect(contour)
-    center_x = x + box_width / 2
-    center_y = y + box_height / 2
-    close_to_coin = (
-        abs(center_x - coin_x) < coin_radius * 1.5 
-        and abs(center_y - coin_y) < coin_radius * 1.5
     )
-    return close_to_coin and box_width < coin_radius * 3.2 and box_height < coin_radius * 3.2
-fabric_contours = [contour for contour in meaningful if not is_coin_contour(contour)]
-if fabric_contours:
-    largest = max(fabric_contours, key=cv2.contourArea)
-    x, y, box_width, box_height = cv2.boundingRect(largest)
-    if pixels_per_cm:
-        estimated_length = max(1.0, round(box_width / pixels_per_cm, 1))
-        estimated_width = max(1.0, round(box_height / pixels_per_cm, 1))
-        confidence = "bonne avec reference"
+    counts = np.bincount(labels.flatten())
+    ordered = centers[np.argsort(counts)[::-1]].astype(int)
+    colors = [f"#{r:02x}{g:02x}{b:02x}" for r, g, b in ordered[:3]]
+    gray = cv2.cvtColor(rgb, cv2.COLOR_RGB2GRAY)
+    blur = cv2.GaussianBlur(gray, (5, 5), 0)
+    edges = cv2.Canny(blur, 60, 150)
+    contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    meaningful = [c for c in contours if cv2.contourArea(c) > 250]
+    object_area = sum(cv2.contourArea(c) for c in meaningful)
+    ratio = min(object_area / max(width * height, 1), 1.0)
+    coin = detect_reference_coin(gray) if reference_diameter_cm else None
+    pixels_per_cm = None
+    reference_detected = False
+    fabric_contours = meaningful
+    if coin and reference_diameter_cm:
+        coin_x, coin_y, coin_radius = coin
+        coin_diameter_px = coin_radius * 2
+        pixels_per_cm = coin_diameter_px / reference_diameter_cm
+        reference_detected = True
+    def is_coin_contour(contour: np.ndarray) -> bool:
+        x, y, box_width, box_height = cv2.boundingRect(contour)
+        center_x = x + box_width / 2
+        center_y = y + box_height / 2
+        close_to_coin = (
+            abs(center_x - coin_x) < coin_radius * 1.5 
+            and abs(center_y - coin_y) < coin_radius * 1.5
+        )
+        return close_to_coin and box_width < coin_radius * 3.2 and box_height < coin_radius * 3.2
+    fabric_contours = [contour for contour in meaningful if not is_coin_contour(contour)]
+    if fabric_contours:
+        largest = max(fabric_contours, key=cv2.contourArea)
+        x, y, box_width, box_height = cv2.boundingRect(largest)
+        if pixels_per_cm:
+            estimated_length = max(1.0, round(box_width / pixels_per_cm, 1))
+            estimated_width = max(1.0, round(box_height / pixels_per_cm, 1))
+            confidence = "bonne avec reference"
+        else:
+            workspace_width_cm = 40
+            workspace_height_cm = 30
+            estimated_length = max(3.0, round((box_width / width) * workspace_width_cm, 1))
+            estimated_width = max(3.0, round((box_height / height) * workspace_height_cm, 1))
+            confidence = "moyenne sans reference" if ratio > 0.18 else "faible sans reference"
     else:
-        workspace_width_cm = 40
-        workspace_height_cm = 30
-        estimated_length = max(3.0, round((box_width / width) * workspace_width_cm, 1))
-        estimated_width = max(3.0, round((box_height / height) * workspace_height_cm, 1))
-        confidence = "moyenne sans reference" if ratio > 0.18 else "faible sans reference"
-else:
-    estimated_length = 18.0
-    estimated_width = 12.0
-    confidence = "faible"
-estimated_pieces = max(1, min(len(meaningful), 50))
-return ImageAnalysis(
-    width,
-    height,
-    colors,
-    ratio,
-    len(meaningful),
-    estimated_length,
-    estimated_width,
-    estimated_pieces,
-    confidence,
-    reference_label,
-    reference_detected,
-    pixels_per_cm,
-)
-def get_ideas(material: str, size: str) -> List[Tuple[str, str, int, str]]:
+        estimated_length = 18.0
+        estimated_width = 12.0
+        confidence = "faible"
+    estimated_pieces = max(1, min(len(meaningful), 50))
+    return ImageAnalysis(
+        width,
+        height,
+        colors,
+        ratio,
+        len(meaningful),
+        estimated_length,
+        estimated_width,
+        estimated_pieces,
+        confidence,
+        reference_label,
+        reference_detected,
+        pixels_per_cm,
+    )
+    def get_ideas(material: str, size: str) -> List[Tuple[str, str, int, str]]:
     return MATERIALS[material]["ideas"][size]
     
 def local_tutorial_steps(title: str, material: str) -> List[str]:
