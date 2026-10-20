@@ -674,6 +674,9 @@ with preview:
                 "La piece de reference n'a pas ete detectee clairement. Reprenez la photo."
                 )
 with tab_results:
+    if st.session_state.analysis is None:
+        st.info("Ajoutez une photo dans l'onglet Scanner puis cliquez sur <<Analyser et proposer >>.")
+    else:
     material = st.session_state.get("material", "Tissu")
     length_cm = st.session_state.get("length_cm", 18.0)
     width_cm = st.session_state.get("width_cm", 12.0)
