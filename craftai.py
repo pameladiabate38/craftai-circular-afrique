@@ -677,37 +677,37 @@ with tab_results:
     if st.session_state.analysis is None:
         st.info("Ajoutez une photo dans l'onglet Scanner puis cliquez sur <<Analyser et proposer >>.")
     else:
-    material = st.session_state.get("material", "Tissu")
-    length_cm = st.session_state.get("length_cm", 18.0)
-    width_cm = st.session_state.get("width_cm", 12.0)
-    pieces = st.session_state.get("pieces", 6)
-    size = classify_size(length_cm, width_cm)
-    ideas = get_ideas(material, size)
+        material = st.session_state.get("material", "Tissu")
+        length_cm = st.session_state.get("length_cm", 18.0)
+        width_cm = st.session_state.get("width_cm", 12.0)
+        pieces = st.session_state.get("pieces", 6)
+        size = classify_size(length_cm, width_cm)
+        ideas = get_ideas(material, size)
     
-    st.subheader("Resultats proposes")
-    st.subheader("Suggestions de l'IA (Expertise Artisanale)")
-    dims = f"{length_cm} cm x {width_cm} cm"
-    suggestions = obtenir_suggestions_ia(material, dims)
-    st.markdown(suggestions)
-    st.caption(f"Materiau: {material} | Dimensions: {length_cm:g} x {width_cm:g} cm | Categorie: {size} ")
+        st.subheader("Resultats proposes")
+        st.subheader("Suggestions de l'IA (Expertise Artisanale)")
+        dims = f"{length_cm} cm x {width_cm} cm"
+        suggestions = obtenir_suggestions_ia(material, dims)
+        st.markdown(suggestions)
+        st.caption(f"Materiau: {material} | Dimensions: {length_cm:g} x {width_cm:g} cm | Categorie: {size} ")
     
-    cols = st.columns(3)
-    for index, idea in enumerate(ideas):
-        title, level, minutes, description = idea
-        min_price, max_price = estimate_burkina_price(material, length_cm, width_cm, level)
-        with cols[index]:
-            st.markdown(
-                f"""
-                <div class="idea-card">
-                <h3>{title}</h3>
-                <span class="badge">Niveau: {level}</span>
-                <span class="badge">{minutes} min</span>
-                <p>{description}</p>
-                <p><b>Prix estime au Burkina Faso :</b><br>{min_price:,} - {max_price:,}
-                </div>
-                """.replace(",", " "),
-                unsafe_allow_html=True,
-            )
+        cols = st.columns(3)
+        for index, idea in enumerate(ideas):
+            title, level, minutes, description = idea
+            min_price, max_price = estimate_burkina_price(material, length_cm, width_cm, level)
+            with cols[index]:
+                st.markdown(
+                    f"""
+                    <div class="idea-card">
+                    <h3>{title}</h3>
+                    <span class="badge">Niveau: {level}</span>
+                    <span class="badge">{minutes} min</span>
+                    <p>{description}</p>
+                    <p><b>Prix estime au Burkina Faso :</b><br>{min_price:,} - {max_price:,}
+                    </div>
+                    """.replace(",", " "),
+                    unsafe_allow_html=True,
+                )
             st.caption("Les prix sont des estimations de demonstration pour le Burkina Faso. Ils doivent etre ajuster.")
 with tab_chat:
     st.subheader("Conversation avec l'IA")
